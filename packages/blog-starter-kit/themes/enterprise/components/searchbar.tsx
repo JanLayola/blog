@@ -39,6 +39,7 @@ export const Search = () => {
 	};
 
 	const updateSearchQuery = () => {
+		setIsSearching(true);
 		setQuery(searchInputRef.current?.value || '');
 	};
 
@@ -52,8 +53,6 @@ export const Search = () => {
 		}
 
 		timerRef.current = setTimeout(async () => {
-			setIsSearching(true);
-
 			const data = await request<
 				SearchPostsOfPublicationQuery,
 				SearchPostsOfPublicationQueryVariables
@@ -137,7 +136,16 @@ export const Search = () => {
 					{searchResults.length > 0 && !isSearching && (
 						<div className="top-100 absolute left-0 z-10 mt-1 flex w-full flex-col items-stretch overflow-hidden rounded-lg border bg-white p-1 text-left text-slate-900 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-50">
 							<h3 className="px-4 py-2 font-medium text-slate-500 dark:text-neutral-400">
-								Found {searchResults.length} results
+								Hem trobat {searchResults.length} resultats
+							</h3>
+							<hr className="dark:border-neutral-800" />
+							{searchResultsList}
+						</div>
+					)}
+					{searchResults.length === 0 && !isSearching && (
+						<div className="top-100 absolute left-0 z-10 mt-1 flex w-full flex-col items-stretch overflow-hidden rounded-lg border bg-white p-1 text-left text-slate-900 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-50">
+							<h3 className="px-4 py-2 font-medium text-slate-500 dark:text-neutral-400">
+								No hem trobat resultats amb &quot;{query}&quot;
 							</h3>
 							<hr className="dark:border-neutral-800" />
 							{searchResultsList}
